@@ -23,7 +23,17 @@ class GoodreadsItemWithEdition(scrapy.Item):
     edition_language = scrapy.Field()
     pass
 
+class BookEditionItem(scrapy.Item):
+    name = scrapy.Field()
+    averageRating = scrapy.Field()
+    numOfRaters = scrapy.Field()
+    language = scrapy.Field()
+    pass
+
+
+
 class BookEditionsItem(scrapy.Item):
     name = scrapy.Field()
     urls = scrapy.Field()
     pass
+
