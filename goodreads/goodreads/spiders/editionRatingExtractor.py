@@ -5,11 +5,11 @@ import logging
 import re
 from goodreads.items import BookEditionItem
 from lxml import html
-
+'''
 class EditionRatingsSpider(scrapy.Spider):
     name = "edition_rating_extractor"
     editions = []
-    with open('test.json') as json_file:
+    with open('editionUrls.json') as json_file:
         data = json.load(json_file)
         start_urls = data[0]['urls']
         languages = []
@@ -29,13 +29,11 @@ class EditionRatingsSpider(scrapy.Spider):
         return values
 
     def parse(self, response):
-        name = response.xpath('//*[@id="bookTitle"]//text()').extract_first()
+        name = response.xpath('//*[@id="bookTitle"]//text()').extract_first().
         language = response.xpath('//*[@itemprop="inLanguage"]//text()').extract_first()
         ratingText = response.xpath('//*[@id="bookMeta"]/script').get()
         values = self.extractRatingAndNumOfRaters(ratingText)
         edition = BookEditionItem(name = name, language = language, averageRating = values['rating'], numOfRaters = values['numOfRaters'])
         self.editions.append(edition)
-    
-
-
-      
+        yield edition
+        '''
