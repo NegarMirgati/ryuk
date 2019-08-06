@@ -1,6 +1,9 @@
 from __future__ import division
 import json
 import matplotlib.pyplot as plt
+import plotly.graph_objs as go
+import operator
+import collections
 import numpy as np
 
 class AverageCalculator(object):
@@ -36,22 +39,19 @@ class AverageCalculator(object):
     
     def plot_bar_x(self, bookName):
         # this is for plotting purpose
+        sorted_x = sorted(self.finalAvgs.items(), key = operator.itemgetter(1))
+        self.finalAvgs = collections.OrderedDict(sorted_x)
         plt.xlabel('Edition Language', fontsize=10)
         plt.ylabel('Average Rating', fontsize=10)
         plt.title('Average rating vs Language for ' + bookName)
-        plt.bar(range(len(self.finalAvgs)), self.finalAvgs.values(), align='center', width=0.5)  # python 2.x
-        plt.xticks(range(len(self.finalAvgs)), self.finalAvgs.keys(), fontsize = 4)  # in python 2.x
+        plt.bar(range(len(self.finalAvgs)), self.finalAvgs.values(), align='center', width=0.5)  
+        plt.xticks(range(len(self.finalAvgs)), self.finalAvgs.keys(), fontsize = 8, rotation='vertical') 
         plt.show()
-
-plt.show()
-        
-        
-
 
 def main():
     ac = AverageCalculator('editionsData.json')
     ac.calcAverage()
-    ac.plot_bar_x('One Hundred years of solitude')
+    ac.plot_bar_x('Kafka on the Shore')
 
 
 if __name__ == "__main__":
