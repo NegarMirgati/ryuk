@@ -30,10 +30,12 @@ class BookEditionItem(scrapy.Item):
     language = scrapy.Field()
     pass
 
-
-
 class BookEditionsItem(scrapy.Item):
     name = scrapy.Field()
     urls = scrapy.Field()
     pass
 
+class ListItem(scrapy.Item):
+    name = scrapy.Field()
+    bookUrls = scrapy.Field()
+    pass
