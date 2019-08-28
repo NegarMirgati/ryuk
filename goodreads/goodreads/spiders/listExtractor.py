@@ -1,5 +1,8 @@
 import scrapy
-import urlparse
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
 from goodreads.items import ListItem
 
 class ListSpider(scrapy.Spider):
@@ -12,15 +15,13 @@ class ListSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        #self.books['name'] = response.css('div.mainContentFloat h1 a::text').extract_first().strip()
-        
         for book_page in response.css('a.bookTitle').xpath('@href'):
-            if(len(self.bookList['bookUrls']) >= 100):
+            if(len(self.bookList['bookUrls']) >= 50):
                 break
             self.bookList['bookUrls'].append(urlparse.urljoin(response.url, book_page.extract()))
         
         next_page = response.xpath("//*[@rel='next']/@href").extract_first()
-        if next_page is not None and len(self.bookList['bookUrls']) < 100 :
+        if next_page is not None and len(self.bookList['bookUrls']) < 50 :
             yield response.follow(next_page, callback=self.parse)
         else:
             yield self.bookList
